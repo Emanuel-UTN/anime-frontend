@@ -5,6 +5,7 @@ import { ModalDialog } from 'react-bootstrap'
 
 import Menu from './components/Menu'
 
+import AnimeItem from './components/AnimeItem'
 function App() {
 
   return (
@@ -15,7 +16,7 @@ function App() {
         <Menu />
         <div className="divBody">
           <Routes>
-            <Route path='/Inicio' element={""}/>
+            <Route path='/Inicio' element={<AnimeItem />}/>
             <Route path='/Por-Ver' element={""}/>
             <Route path='/Vistos' element={""}/>
             <Route path='/Animes' element={""}/>
