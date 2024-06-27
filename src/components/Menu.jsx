@@ -6,7 +6,7 @@ export default function Menu() {
         <div className="navbar navbar-expand-md navbar">
             <div className="container-fluid">
                 <a className="navbar-brand" href='#!' style={{ color: "crimson"}}>
-                    <i class="fa-solid fa-dragon"></i>
+                    <i className="fa-solid fa-dragon"></i>
                     &nbsp;<i>Animes</i>
                 </a>
                 <button

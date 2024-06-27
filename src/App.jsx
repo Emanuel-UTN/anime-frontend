@@ -15,14 +15,14 @@ function App() {
         <Menu />
         <div className="divBody">
           <Routes>
-            <Route path='/Inicio'/>
-            <Route path='/Por-Ver'/>
-            <Route path='/Vistos'/>
-            <Route path='/Animes'/>
+            <Route path='/Inicio' element={""}/>
+            <Route path='/Por-Ver' element={""}/>
+            <Route path='/Vistos' element={""}/>
+            <Route path='/Animes' element={""}/>
 
-            <Route path='/Etiquetas'/>
-            <Route path='/Calificaciones'/>
-            <Route path='/Sitios'/>
+            <Route path='/Etiquetas' element={""}/>
+            <Route path='/Calificaciones' element={""}/>
+            <Route path='/Sitios' element={""}/>
 
             <Route path='*' element={<Navigate to="/Inicio" replace/>}/>
           </Routes>
