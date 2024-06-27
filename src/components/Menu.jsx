@@ -32,6 +32,9 @@ export default function Menu() {
                         <li className="nav-item">
                             <NavLink to={"/Vistos"} className="nav-link"> Vistos </NavLink>
                         </li>
+                        <li className="nav-item">
+                            <NavLink to={"/Animes"} className="nav-link"> Animes </NavLink>
+                        </li>
 
                         <li className="nav-item dropdown">
                             <a href="#!" className="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"> Mas </a>
