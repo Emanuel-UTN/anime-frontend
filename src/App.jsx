@@ -4,8 +4,8 @@ import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom'
 import { ModalDialog } from 'react-bootstrap'
 
 import Menu from './components/Menu'
+import Animes from './components/Animes/Animes'
 
-import AnimeItem from './components/AnimeItem'
 function App() {
 
   return (
@@ -16,10 +16,10 @@ function App() {
         <Menu />
         <div className="divBody">
           <Routes>
-            <Route path='/Inicio' element={<AnimeItem />}/>
-            <Route path='/Por-Ver' element={""}/>
-            <Route path='/Vistos' element={""}/>
-            <Route path='/Animes' element={""}/>
+            <Route path='/Inicio' element={""}/>
+            <Route path='/Por-Ver' element={<Animes Busqueda={false} Estado='Por Ver' key={1}/>}/>
+            <Route path='/Vistos' element={<Animes Busqueda={false} Estado='Visto' key={2}/>}/>
+            <Route path='/Animes' element={<Animes Busqueda={true} key={3}/>}/>
 
             <Route path='/Etiquetas' element={""}/>
             <Route path='/Calificaciones' element={""}/>

@@ -3,7 +3,7 @@ body {
 }
 
 .divBody {
-  background-color: #3b3f42;
+  /*background-color: #3b3f42;*/
   min-height: 75vh;
   padding: 1rem;
 }
@@ -18,12 +18,12 @@ footer {
 }
 
 .tituloPagina {
-  font-size: 1.75rem;
-  font-weight: 500;
-  color: white;
-  text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;
+  font-size: 2rem;
+  font-weight: 550;
+  color: crimson;
+  text-shadow: 1px 1px 2px black;
   border-bottom-style: solid;
-  border-color: gray;
+  border-color: #3b3f42;
   border-bottom-width: thin;
   padding-bottom: 0.1em;
   margin-bottom: 0.5em;
