@@ -27,7 +27,7 @@ async function BuscarPorId(Id) {
 
 async function Grabar(Anime) {
     if (typeof Anime === "string") {
-        const resp = await httpService.post(urlResource, { params: { nombre: Nombre }});
+        const resp = await httpService.post(urlResource, { nombre: Anime });
 
         return resp.data;
     }

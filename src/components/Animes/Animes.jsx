@@ -30,6 +30,8 @@ export default function Animes(props) {
     const [ Pagina, setPagina ] = useState(1);
     const [ Paginas, setPaginas ] = useState([]);
 
+    const [ show, setShow ] = useState(false);
+
     // Cargar listas necesarias
     useEffect(() => {
         async function BuscarListas (servicio, setDatos) {
@@ -107,25 +109,31 @@ export default function Animes(props) {
     }
 
     async function Grabar (anime) {
+        let nuevoAnime = {}
         try {
-            await animesService.Grabar(anime);
+            nuevoAnime = await animesService.Grabar(anime);
         } catch (error) {
             modalDialogService.Alert(error?.response?.data?.message ?? error.toString(), "Error al grabar el anime", undefined, undefined, undefined, undefined, "danger");
             return;
         }
 
-        await Buscar();
-        Volver();
+        if (typeof anime !== "string") {
+            await Buscar();
+            Volver();
 
-        modalDialogService.Alert(
-            `El anime fue ${AccionABMC === "A" ? 'agregado' : 'modificado'} correctamente.`, 
-            "Grabar Anime",
-            undefined, 
-            undefined, 
-            undefined, 
-            undefined, 
-            "success"
-        );
+            modalDialogService.Alert(
+                `El anime fue ${AccionABMC === "A" ? 'agregado' : 'modificado'} correctamente.`, 
+                "Grabar Anime",
+                undefined, 
+                undefined, 
+                undefined, 
+                undefined, 
+                "success"
+            );
+        } else {
+            setAnime(nuevoAnime);
+            setAccionABMC("A");
+        }
     }
 
     function Volver(){
@@ -137,7 +145,14 @@ export default function Animes(props) {
         <div>
             <div className="tituloPagina mx-5">
                 Animes {props.Estado ? ` - ${props.Estado}` : ""}
+                {AccionABMC === "L" && (
+                    <button className="btn btn-outline-success float-end" onClick={() => setShow(true)}>
+                        <i className="fa fa-plus"></i> Nuevo Anime
+                    </button>
+                )}
             </div>
+
+            <NuevoAnimeForm nuevoAnime={Grabar} show={show} setShow={setShow} Agregar={Agregar}/>
 
             {props.Busqueda && AccionABMC === "L" && (
                 <div>
@@ -185,4 +200,53 @@ export default function Animes(props) {
             )}
         </div>
     )
+}
+
+import { Modal, Form, Button } from "react-bootstrap";
+
+function NuevoAnimeForm({ nuevoAnime, show, setShow, Agregar }) {
+    const [nombreAnime, setNombreAnime] = useState("");
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        nuevoAnime(nombreAnime);
+        setNombreAnime("");
+        setShow(false)
+    };
+
+    return (
+        <Modal show={show} onHide={() => setShow(false)}>
+            <Modal.Header closeButton className="bg-success">
+                <Modal.Title>Agregar nuevo Anime</Modal.Title>
+            </Modal.Header>
+
+            <Modal.Body>
+                <Form onSubmit={handleSubmit} autoComplete="off">
+                    <Form.Group className="input-group flex-nowrap my-3" controlId="nombreAnime">
+                        <span className="input-group-text">Nombre</span>
+                        <Form.Control
+                            type="text"
+                            placeholder="Nombre del Anime"
+                            value={nombreAnime}
+                            onChange={(e) => setNombreAnime(e.target.value)}
+                            className="form-control"
+                            autoFocus
+                        />
+                    </Form.Group>
+
+                    <div className="d-flex justify-content-end">
+                        <Button variant="secondary" className="me-2 mt-2" title="Defini uno nuevo de cero" onClick={() => {
+                                setShow(false)
+                                Agregar();
+                            }} >
+                            <i className="fa-regular fa-clipboard"></i> Definir
+                        </Button>
+                        <Button variant="success" type="submit" className="mt-2" title="Buscar automaticamente">
+                            <i className="fa fa-search"></i> Buscar
+                        </Button>
+                    </div>
+                </Form>
+            </Modal.Body>
+        </Modal>
+    );
 }
