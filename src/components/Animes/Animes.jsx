@@ -8,6 +8,7 @@ import etiquetasService from "../../services/etiquetas.service";
 import calificacionesService from "../../services/calificaciones.service";
 
 import AnimesListado from "./AnimesListado";
+import AnimesRegistro from "./AnimesRegistro";
 
 export default function Animes(props) {
     const [ AccionABMC, setAccionABMC ] = useState("L");
@@ -155,6 +156,30 @@ export default function Animes(props) {
                         Consultar,
                         Modificar,
                         Eliminar
+                    }}
+                />
+            )}
+
+            {AccionABMC === "L" && Animes?.length === 0 && (
+                <div className="text-center mt-5 alert">
+                    <h1>
+                        <i className="fa-solid fa-biohazard text-danger"></i>
+                        {" No se encontraron Animes "}
+                        <i className="fa-solid fa-biohazard text-danger"></i>
+                    </h1>
+                </div>
+            )}
+
+            {AccionABMC !== "L" && (
+                <AnimesRegistro
+                    {...{
+                        AccionABMC,
+                        Anime,
+                        Sitios,
+                        Etiquetas,
+                        Calificaciones,
+                        Grabar,
+                        Volver
                     }}
                 />
             )}

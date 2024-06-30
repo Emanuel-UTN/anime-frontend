@@ -68,7 +68,7 @@ export function ModalDialog() {
             faIcon = "fa-solid fa-triangle-exclamation";
             break;
         case "warning":
-            classHeader = "bg-warning";
+            classHeader = "bg-warning text-dark";
             faIcon = "fa-solid fa-triangle-exclamation";
             break;
         case "info":

@@ -1,7 +1,7 @@
 import './App.css'
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom'
 
-import { ModalDialog } from 'react-bootstrap'
+import { ModalDialog } from './components/ModalDialog'
 
 import Menu from './components/Menu'
 import Animes from './components/Animes/Animes'

@@ -36,7 +36,7 @@ httpService.interceptors.response.use(
         else if (error.response.status === 403)
             error.message = "No tiene permisos para acceder a este recurso";
         else
-            error.message = "Actualmente tenemos inconvenientes en el servidor, por favor intente mas tarde";
+            error.message = error.response?.data?.error ?? "Actualmente tenemos inconvenientes en el servidor, por favor intente mas tarde";
 
         modalService.Alert(error.message, "Error", undefined, undefined, undefined, undefined, "danger");
         

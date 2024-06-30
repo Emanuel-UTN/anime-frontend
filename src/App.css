@@ -33,14 +33,14 @@ footer {
 
 /* todos los formularios */
 form {
-  background-color: rgb(241, 243, 247);
+  /*background-color: rgb(241, 243, 247);*/
   border-radius: 0.5rem;
   border-style: solid;
-  border-color: lightgrey;
+  /*border-color: lightgrey;*/
   border-width: thin;
   margin: 0em 0.5rem 1rem 0.5rem;
   padding: 0.5rem;
-  box-shadow: 0.62rem 0.62rem 0.31rem rgb(175, 173, 173);
+  /*box-shadow: 0.62rem 0.62rem 0.31rem rgb(175, 173, 173);*/
 }
 
 /* espacio en los botones contenidos en un div con esta clase */

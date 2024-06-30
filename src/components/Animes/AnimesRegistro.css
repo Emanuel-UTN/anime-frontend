@@ -1,0 +1,45 @@
+.anime-registro-form {
+  max-width: 1500px;
+  margin: auto;
+}
+
+.anime-image {
+  max-width: 75px;
+  width: 100%;
+}
+
+.contenido-form {
+  margin-bottom: 20px;
+}
+
+.etiquetas-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.etiquetas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px; /* Espacio entre etiquetas */
+  padding: 10px 0; /* Espacio superior e inferior */
+}
+
+.input-group {
+  display: flex;
+  align-items: center;
+  flex: 1 0 200px; /* Ajusta el ancho base de cada etiqueta */
+}
+
+.input-group-text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.acciones {
+  position: absolute;
+  right: 15rem;
+  display: flex;
+  gap: 1rem;
+  transition: right 0.3s ease-in-out;
+}
