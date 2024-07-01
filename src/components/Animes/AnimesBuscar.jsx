@@ -129,14 +129,16 @@ export default function AnimesBuscar({
                                             ? EtiquetasBusqueda.join(", ")
                                             : "Seleccionar Etiquetas"}
                                     </span>
-                                    <button
-                                        className="btn btn-link text-danger"
-                                        type="button"
-                                        onClick={() => setEtiquetasBusqueda([])}
-                                        style={{ textDecoration: 'none' }}
-                                    >
-                                        <i className="fa fa-circle-xmark"></i>
-                                    </button>
+                                    {EtiquetasBusqueda.length > 0 && (
+                                        <button
+                                            className="btn btn-link text-danger"
+                                            type="button"
+                                            onClick={() => setEtiquetasBusqueda([])}
+                                            style={{ textDecoration: 'none' }}
+                                        >
+                                            <i className="fa fa-circle-xmark"></i>
+                                        </button>
+                                    )}
                                 </div>
                                 <button
                                     type="button"

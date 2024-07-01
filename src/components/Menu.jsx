@@ -38,7 +38,9 @@ export default function Menu() {
                             </li>
 
                             <li className="nav-item dropdown">
-                                <a href="#!" className="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"> Mas </a>
+                                <a href="#!" className="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Recursos <i className="fa fa-layer-group"></i>
+                                </a>
 
                                 <ul className="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdown">
                                     <li>

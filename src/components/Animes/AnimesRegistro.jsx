@@ -229,15 +229,15 @@ export default function AnimeRegistro({
         {/* Botones */}
         <div className="row justify-content-center">
           <div className="col text-center botones">
-            {AccionABMC !== "C" && (
-              <button className="btn btn-primary" type="submit">
-                <i className="fa fa-check"></i> Grabar
-              </button>
-            )}
-            <button className="btn btn-warning" type="button" onClick={() => Volver()}>
+            <button className="btn btn-outline-danger" type="button" onClick={() => Volver()}>
               <i className="fa fa-undo"></i>
               {AccionABMC !== "C" ? " Cancelar" : " Volver"}
             </button>
+            {AccionABMC !== "C" && (
+              <button className="btn btn-outline-success" type="submit">
+                <i className="fa fa-save"></i> Grabar
+              </button>
+            )}
           </div>
         </div>
       </div>
