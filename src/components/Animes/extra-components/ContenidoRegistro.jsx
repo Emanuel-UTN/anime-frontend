@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
 
+import Url from "./Url";
+import EtiquetasForm from "./EtiquetasForm";
+
 export default function ContenidoRegistro({ 
     index, 
     contenido, 
@@ -8,15 +11,22 @@ export default function ContenidoRegistro({
     register, 
     errors, 
     setValue, 
-    watch 
+    watch,
+    actualizarEnEmision
 }) {
-    const etiquetasSeleccionadas = watch(`contenidos[${index}].etiquetas`, contenido.etiquetas || []);
+    const [etiquetasSeleccionadas, setEtiquetasSeleccionadas] = useState(
+        watch(`contenidos[${index}].etiquetas`) || []
+    );
     const [imagenUrl, setImagenUrl] = useState(contenido.imagenUrl || '');
+    const [show, setShow] = useState(false);
 
     useEffect(() => {
-        setValue(`contenidos[${index}].etiquetas`, contenido.etiquetas || []);
         setImagenUrl(contenido.imagenUrl || '');
     }, [contenido, setValue, index]);
+
+    useEffect(() => {
+        setValue(`contenidos[${index}].etiquetas`, etiquetasSeleccionadas);
+    }, [etiquetasSeleccionadas, setValue, index]);
 
     const handleImagenUrlChange = (event) => {
         const newUrl = event.target.value;
@@ -28,7 +38,15 @@ export default function ContenidoRegistro({
         const updatedUrls = [...contenido.urls, { site: '', url: '' }];
         setValue(`contenidos[${index}].urls`, updatedUrls);
         setValue(`contenidos`, watch('contenidos'));
-    };    
+    }; 
+
+    const actualizarEtiquetas = (nuevasEtiquetas) => {
+        setEtiquetasSeleccionadas(nuevasEtiquetas);
+    };
+    
+    const handleLinkClick = (event) => {
+        event.stopPropagation();
+    };
 
     return (
         <div className="container-fluid contenido-form">
@@ -131,32 +149,55 @@ export default function ContenidoRegistro({
                         {/* En Español */}
                         <div className="col-md-3 col-sm-6">
                             <div className="input-group flex-nowrap">
-                                <span className="input-group-text md fs-5" id={`contenido[${index}]-enEspanol-input`} style={{"backgroundColor": "purple"}}>
-                                    <i className="fa fa-language mx-1"></i> En Español
-                                </span>
-                                <div className="input-group-text">
-                                    <input 
+                                <label
+                                    className={`btn fs-5 enEspañol ${watch(`contenidos[${index}].enEspanol`) ? 'active' : 'bg-transparent'}`}
+                                    style={{ borderRadius: '0.5rem', padding: '0.375rem 0.75rem' }}
+                                >
+                                    <i className="fa fa-language mx-1"></i> En Español <i className={`fa-circle fa-${watch(`contenidos[${index}].enEspanol`) ? 'solid' : 'regular'}`}></i>
+                                    <input
                                         {...register(`contenidos[${index}].enEspanol`)}
-                                        className="form-check-input mt-0"
                                         type="checkbox"
-                                        aria-label={`contenido[${index}]-enEspanol-input`} />
-                                </div>
+                                        className="form-check-input mt-0 visually-hidden"
+                                        aria-label={`contenido[${index}]-enEspanol-input`}
+                                        checked={watch(`contenidos[${index}].enEspanol`)}
+                                        onChange={(e) => {
+                                            const newEnEspanol = e.target.checked;
+                                            setValue(`contenidos[${index}].enEspanol`, newEnEspanol);
+                                        }}
+                                    />
+                                </label>
                             </div>
                         </div>
                         
                         {/* En Emisión */}
                         <div className="col-md-3 col-sm-6">
-                            <div className="input-group flex-nowrap">
-                                <span className="input-group-text md fs-5" id={`contenido[${index}]-enEmision-input`} style={{"backgroundColor": "coral", color: "wheat"}}>
-                                    <i className="fa-solid fa-tv mx-1"></i> En Emisión
-                                </span>
-                                <div className="input-group-text">
-                                    <input 
-                                        {...register(`contenidos[${index}].enEmision`)}
-                                        className="form-check-input mt-0"
-                                        type="checkbox"
-                                        aria-label={`contenido[${index}]-enEmision-input`} />
-                                </div>
+                            <div className="btn-group flex-nowrap" aria-label="radio toggle button">
+                                <label
+                                    className={`btn fs-5 enEmision ${watch(`contenidos[${index}].enEmision`) ? 'active' : 'bg-transparent'}`}
+                                    onClick={() => {
+                                        const newEnEmision = !contenido.enEmision;
+                                        setValue(`contenidos[${index}].enEmision`, newEnEmision);
+                                        actualizarEnEmision();
+                                    }}
+                                    style={{
+                                        borderRadius: '0.5rem', // Ajusta según tu diseño
+                                        padding: '0.375rem 0.75rem' // Ajusta según tu diseño
+                                    }}
+                                >
+                                    <i className="fa-solid fa-tv mx-1"></i> En Emisión <i className={`fa fa-toggle-${watch(`contenidos[${index}].enEmision`) ? 'on' : 'off'}`}></i>
+                                </label>
+                                <input
+                                    {...register(`contenidos[${index}].enEmision`)}
+                                    type="checkbox"
+                                    className="btn-check"
+                                    id={`btn-radio-${index}`}
+                                    checked={contenido.enEmision}
+                                    onChange={() => {
+                                        const newEnEmision = !contenido.enEmision;
+                                        setValue(`contenidos[${index}].enEmision`, newEnEmision);
+                                    }}
+                                    aria-label={`contenido[${index}]-enEmision-input`}
+                                />
                             </div>
                         </div>
                     </div> 
@@ -165,39 +206,19 @@ export default function ContenidoRegistro({
                     {/* Etiquetas */}
                     <div className="row my-2">
                         <div className="etiquetas-container my-2">
-                            <div className="etiquetas">
-                                {Etiquetas.map((etiqueta) => (
-                                    <div className="input-group flex-nowrap" key={etiqueta.id}>
-                                        <div className="input-group-text">
-                                            <input 
-                                                {...register(`contenidos[${index}].etiquetas.${etiqueta.nombre}`, { 
-                                                    setValueAs: value => {
-                                                        const current = etiquetasSeleccionadas || [];
-                                                        if (value) {
-                                                            return [...current, etiqueta.nombre];
-                                                        } else {
-                                                            return current.filter(e => e !== etiqueta.nombre);
-                                                        }
-                                                    }
-                                                })}
-                                                className="form-check-input mt-0"
-                                                type="checkbox"
-                                                checked={etiquetasSeleccionadas.includes(etiqueta.nombre)}
-                                                onChange={() => {
-                                                    const updatedEtiquetas = etiquetasSeleccionadas.includes(etiqueta.nombre)
-                                                        ? etiquetasSeleccionadas.filter(e => e !== etiqueta.nombre)
-                                                        : [...etiquetasSeleccionadas, etiqueta.nombre];
-                                                    setValue(`contenidos[${index}].etiquetas`, updatedEtiquetas);
-                                                }}
-                                                aria-label={`contenido[${index}]-etiqueta-${etiqueta.id}-input`} 
-                                            />
-                                        </div>
-                                        <span className="input-group-text md fs-5" id={`contenido[${index}]-etiqueta-${etiqueta.id}-input`}>
-                                            {etiqueta.nombre}
-                                        </span>
-                                    </div>
-                                ))}
+                            <div className="fs-5">
+                                <i className="fa fa-tags"></i> {watch(`contenidos[${index}].etiquetas`).join(', ') || 'Sin Etiquetas'}
+                                <button
+                                    type="button"
+                                    className="btn btn-outline-primary mx-3"
+                                    onClick={() => {
+                                        setShow(true);
+                                    }}
+                                >
+                                    <i className="fa fa-tags"></i> Modificar
+                                </button>
                             </div>
+                            <EtiquetasForm {...{ show, setShow, etiquetasSeleccionadas, actualizarEtiquetas, register, index }} etiquetasDisponibles={Etiquetas}/>
                         </div>
                     </div>
                     <hr />
@@ -217,11 +238,15 @@ export default function ContenidoRegistro({
                                             })}
                                             className="input-group-text md fs-5"
                                             id={`contenido[${index}]-url-${urlIndex}-input`}
+                                            onChange={(e) => {
+                                                setValue(`contenidos[${index}].urls[${urlIndex}].site`, e.target.value);
+                                            }}
                                         >
                                             {Sitios.map((sitio) => (
                                                 <option value={sitio.nombre} key={sitio.nombre}>{sitio.nombre}</option>
                                             ))}
                                         </select>
+
                                         <input 
                                             type="text"
                                             {...register(`contenidos[${index}].urls[${urlIndex}].url`, {
@@ -231,11 +256,23 @@ export default function ContenidoRegistro({
                                                 }
                                             })}
                                             placeholder={`URL ${urlIndex + 1}`}
-                                            className={"form-control fs-5" + (errors?.contenidos?.[index]?.urls?.[urlIndex] ? " is-invalid" : "")}
+                                            className={"form-control fs-5" + (errors?.contenidos?.[index]?.urls?.[urlIndex]?.url ? " is-invalid" : "")}
                                             aria-label={`URL ${urlIndex + 1}`}
                                             aria-describedby={`contenido[${index}]-url-${urlIndex}-input`}
-                                            defaultValue={url}
+                                            onChange={(e) => {
+                                                setValue(`contenidos[${index}].urls[${urlIndex}].url`, e.target.value);
+                                            }}
                                         />
+
+                                        <span className="input-group-text fs-5">
+                                            <Url 
+                                                key={urlIndex}
+                                                url={watch(`contenidos[${index}].urls[${urlIndex}]`)}
+                                                handleLinkClick={handleLinkClick}
+                                                Sitios={Sitios}
+                                                data_text={""}
+                                            />
+                                        </span>
                                     </div>
                                     {errors?.contenidos?.[index]?.urls?.[urlIndex] && (
                                         <div className="text-danger my-1">

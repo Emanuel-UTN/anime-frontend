@@ -1,6 +1,8 @@
 import "./AnimeItem.css";
 import React, { useState, useEffect } from "react";
 
+import Url from "../extra-components/Url";
+
 export default function AnimeItem({ Anime, Sitios, Consultar, Modificar, Eliminar }) {
     const [loading, setLoading] = useState(true);
     const [urls, setUrls] = useState([]);
@@ -25,6 +27,7 @@ export default function AnimeItem({ Anime, Sitios, Consultar, Modificar, Elimina
                         {Anime.contenidos.map((contenido, index) => (
                             <div key={contenido.id} className={`carousel-item ${index === 0 ? 'active' : ''}`}>
                                 <div className="row g-0 content-container">
+                                    {/* Imagen */}
                                     <div className="col-md-3 col-lg-2">
                                         <img src={contenido.imagenUrl} alt={contenido.title} className="img-fluid rounded-start anime-image" />
                                     </div>
@@ -33,8 +36,11 @@ export default function AnimeItem({ Anime, Sitios, Consultar, Modificar, Elimina
                                             <div className="row">
                                                 <div className="col-md">
                                                     <h3 className="card-title">
+                                                        {/* Titulo */}
                                                         {Anime.title}
+                                                        {/* Tipo */}
                                                         <span className={`AnimeType ${Anime.type}`}>{Anime.type}</span>
+                                                        {/* En Emision */}
                                                         {Anime.enEmision && (
                                                             <span className="EnEmision">
                                                                 <i className="fa-solid fa-tv mx-1"></i> En Emision
@@ -42,18 +48,22 @@ export default function AnimeItem({ Anime, Sitios, Consultar, Modificar, Elimina
                                                         )}
                                                     </h3>
                                                 </div>
+                                                {/* Acciones */}
                                                 <div className="col-md-4 content-details me-5">
-                                                    <button className="btn btn-outline-primary mx-1" onClick={() => Consultar(Anime)} title="Consultar">
-                                                        <i className="fa fa-eye"></i>
-                                                    </button>
-                                                    <button className="btn btn-outline-warning mx-1" onClick={() => Modificar(Anime)} title="Modificar">
-                                                        <i className="fa fa-palette"></i>
-                                                    </button>
-                                                    <button className="btn btn-outline-danger mx-1" onClick={() => Eliminar(Anime)} title="Eliminar">
-                                                        <i className="fa fa-trash-can"></i>
-                                                    </button>
+                                                    <div className="btn-group">
+                                                        <button className="btn btn-outline-primary" onClick={() => Consultar(Anime)} title="Consultar">
+                                                            <i className="fa fa-eye"></i>
+                                                        </button>
+                                                        <button className="btn btn-outline-warning" onClick={() => Modificar(Anime)} title="Modificar">
+                                                            <i className="fa fa-palette"></i>
+                                                        </button>
+                                                        <button className="btn btn-outline-danger" onClick={() => Eliminar(Anime)} title="Eliminar">
+                                                            <i className="fa fa-trash-can"></i>
+                                                        </button>
+                                                    </div>
                                                 </div>
                                             </div>
+                                            {/* Contenidos */}
                                             <p className="card-text fs-5">{Anime.cantContenidos}</p>
                                             <div className="content-details mt-4">
                                                 <div className="row">
@@ -75,9 +85,9 @@ export default function AnimeItem({ Anime, Sitios, Consultar, Modificar, Elimina
                                                         <Url
                                                             key={index}
                                                             url={url}
-                                                            index={index}
                                                             handleLinkClick={handleLinkClick}
                                                             Sitios={Sitios}
+                                                            data_text={url.url}
                                                         />
                                                     ))}
                                                 </div>
@@ -97,33 +107,6 @@ export default function AnimeItem({ Anime, Sitios, Consultar, Modificar, Elimina
                         <span className="visually-hidden">Next</span>
                     </button>
                 </div>
-            )}
-        </div>
-    );
-}
-
-function Url({ url, index, handleLinkClick, Sitios }) {
-    const [sitio, setSitio] = useState(null);
-
-    useEffect(() => {
-        Sitios && Sitios.map((sitio) => (
-            sitio.nombre === url.site && setSitio(sitio)
-        ));
-    }, [Sitios, url.site]);
-
-    return (
-        <div className="link mx-1">
-            {sitio && sitio.nombre === url.site && (
-                <a
-                    className="icon-link icon-link-hover"
-                    href={`${sitio.url}${url.url}`}
-                    onClick={handleLinkClick}
-                    target="_blank" // Abre el enlace en una nueva pestaña
-                    rel="noopener noreferrer"
-                    data-text={url.url}
-                >
-                    <img src={sitio.image} alt={url.site} className="icon-link" />
-                </a>
             )}
         </div>
     );

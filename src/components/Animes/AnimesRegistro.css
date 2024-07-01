@@ -43,3 +43,39 @@
   gap: 1rem;
   transition: right 0.3s ease-in-out;
 }
+
+label.enEmision {
+  color: coral;
+  border-color: coral;
+}
+
+label.enEmision:hover {
+  background-color: coral;
+  color: wheat;
+  border-color: wheat;
+}
+
+label.enEmision.active {
+  background-color: coral;
+  color: wheat;
+  border-color: wheat;
+}
+
+label.enEspañol {
+  color: purple;
+  border-color: purple;
+  border-radius: 0.5rem; /* Ajusta el redondeo según tu diseño */
+  padding: 0.375rem 0.75rem; /* Ajusta el padding según tu diseño */
+}
+
+label.enEspañol:hover {
+  background-color: purple;
+  color: white;
+  border-color: white;
+}
+
+label.enEspañol.active {
+  background-color: purple;
+  color: white;
+  border-color: white;
+}

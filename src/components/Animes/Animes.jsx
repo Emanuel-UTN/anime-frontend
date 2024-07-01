@@ -113,7 +113,15 @@ export default function Animes(props) {
         try {
             nuevoAnime = await animesService.Grabar(anime);
         } catch (error) {
-            modalDialogService.Alert(error?.response?.data?.message ?? error.toString(), "Error al grabar el anime", undefined, undefined, undefined, undefined, "danger");
+            modalDialogService.Alert(
+                error?.response?.data?.message ?? error.toString(), 
+                `Error al ${typeof anime === "string" ? 'buscar' : 'grabar'} el anime`,
+                undefined, 
+                undefined, 
+                undefined, 
+                undefined, 
+                "danger"
+            );
             return;
         }
 

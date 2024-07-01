@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import "./AnimesRegistro.css"; // Asegúrate de importar tu archivo CSS
 
-import ContenidoRegistro from "./ContenidoRegistro";
+import ContenidoRegistro from "./extra-components/ContenidoRegistro";
 
 export default function AnimeRegistro({
   AccionABMC,
@@ -43,11 +43,35 @@ export default function AnimeRegistro({
     setValue("contenidosActualizados", true);
   };
 
-  function eliminarContenido(index) {
+  const agregarContenido = () => {
+    const nuevosContenidos = [
+        ...getValues("contenidos"),
+        {
+            id: Date.now(),
+            title: "",
+            type: "",
+            enEspanol: false,
+            enEmision: false,
+            etiquetas: [],
+            urls: [],
+            imagenUrl: "",
+        },
+    ];
+    setValue("contenidos", nuevosContenidos);
+    actualizarEnEmision();
+  };
+
+  const eliminarContenido = (index) => {
     const contenidos = getValues("contenidos");
     const nuevoContenidos = contenidos.filter((_, i) => i !== index);
     setValue("contenidos", nuevoContenidos);
-  }
+    actualizarEnEmision();
+  };
+
+  const actualizarEnEmision = (contenidos) => {
+    const enEmision = watch("contenidos").some((contenido) => contenido.enEmision);
+    setValue("enEmision", enEmision);
+  };
 
   useEffect(() => {
     setValue("contenidos", Anime.contenidos);
@@ -118,18 +142,22 @@ export default function AnimeRegistro({
 
             {/* En Emisión */}
             <div className="col-md-3 col-sm-6">
-              <div className="input-group flex-nowrap">
-                <span className="input-group-text md fs-3" id="anime-enEmision-input" style={{"backgroundColor": "coral", color: "wheat"}}>
-                  <i className="fa-solid fa-tv mx-1"></i> En Emisión
-                </span>
-                <div className="input-group-text">
-                  <input 
-                    {...register("enEmision")}
-                    className="form-check-input mt-0"
-                    type="checkbox"
-                    aria-label="anime-enEmision-input" />
+                <div className="input-group flex-nowrap">
+                    <label
+                        className={`btn fs-3 enEmision ${watch("enEmision") ? 'active' : 'bg-transparent'}`}
+                        style={{ borderRadius: '0.5rem', padding: '0.375rem 0.75rem' }}
+                    >
+                        <i className="fa-solid fa-tv mx-1"></i> En Emisión
+                        <input
+                            type="checkbox"
+                            className="form-check-input mt-0 visually-hidden"
+                            aria-label="anime-enEmision-input"
+                            readOnly
+                            checked={watch("enEmision")}
+                            
+                        />
+                    </label>
                 </div>
-              </div>
             </div>
           </div>
 
@@ -147,11 +175,13 @@ export default function AnimeRegistro({
                   register,
                   errors,
                   setValue,
-                  watch
+                  watch,
+                  actualizarEnEmision
                 }}
               />
               {AccionABMC !== "C" && (
                 <div>
+                  {/* Acciones */}
                   {index < contenidos.length - 1 && (
                     <button 
                       type="button" 
@@ -181,6 +211,18 @@ export default function AnimeRegistro({
               )}
             </div>
           ))}
+
+          {AccionABMC !== "C" && (
+            <div className="row my-3">
+              <button
+                type="button"
+                className="btn btn-outline-primary"
+                onClick={agregarContenido}
+              >
+                <i className="fa fa-plus"></i> Añadir Contenido
+              </button>
+            </div>
+          )}
         </fieldset>
         <hr />
 
