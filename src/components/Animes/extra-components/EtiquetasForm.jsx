@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Modal, Form, Button, Row, Col } from "react-bootstrap";
+import { Modal, Form, Row, Col } from "react-bootstrap";
 
 export default function EtiquetasForm({
     show,
     setShow,
     etiquetasSeleccionadas,
     etiquetasDisponibles,
-    actualizarEtiquetas,
-    register,
-    index
+    actualizarEtiquetas
 }) {
     const [filtro, setFiltro] = useState("");
 
@@ -41,16 +39,6 @@ export default function EtiquetasForm({
                                 <div className="input-group flex-nowrap my-1">
                                     <div className="input-group-text">
                                         <input
-                                            {...register(`contenidos[${index}].etiquetas.${etiqueta.nombre}`, {
-                                                setValueAs: (value) => {
-                                                    const current = etiquetasSeleccionadas || [];
-                                                    if (value) {
-                                                        return [...current, etiqueta.nombre];
-                                                    } else {
-                                                        return current.filter((e) => e !== etiqueta.nombre);
-                                                    }
-                                                },
-                                            })}
                                             className="form-check-input mt-0"
                                             type="checkbox"
                                             checked={etiquetasSeleccionadas.includes(etiqueta.nombre)}
@@ -60,11 +48,11 @@ export default function EtiquetasForm({
                                                     : [...etiquetasSeleccionadas, etiqueta.nombre];
                                                 actualizarEtiquetas(updatedEtiquetas);
                                             }}
-                                            aria-label={`contenido[${index}]-etiqueta-${etiqueta.id}-input`}
-                                            id={`contenido[${index}]-etiqueta-${etiqueta.id}-input`}
+                                            aria-label={`etiqueta-${etiqueta.id}-input`}
+                                            id={`etiqueta-${etiqueta.id}-input`}
                                         />
                                     </div>
-                                    <span className="input-group-text md fs-5" id={`contenido[${index}]-etiqueta-${etiqueta.id}-input`}>
+                                    <span className="input-group-text md fs-5" id={`etiqueta-${etiqueta.id}-input`}>
                                         {etiqueta.nombre}
                                     </span>
                                 </div>

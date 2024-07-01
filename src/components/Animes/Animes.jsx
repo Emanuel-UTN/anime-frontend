@@ -7,6 +7,7 @@ import sitiosService from "../../services/sitios.service";
 import etiquetasService from "../../services/etiquetas.service";
 import calificacionesService from "../../services/calificaciones.service";
 
+import AnimesBuscar from "./AnimesBuscar";
 import AnimesListado from "./AnimesListado";
 import AnimesRegistro from "./AnimesRegistro";
 
@@ -53,7 +54,7 @@ export default function Animes(props) {
         else
             _pagina = Pagina;
 
-        const data = await animesService.Buscar(Titulo, Tipo, EnEmision, Estado, Calificacion, Etiquetas, _pagina);
+        const data = await animesService.Buscar(Titulo, Tipo, EnEmision, Estado, Calificacion, EtiquetasBusqueda, _pagina);
         setAnimes(data);
 
         if (data.RegistrosTotal) {
@@ -163,9 +164,19 @@ export default function Animes(props) {
             <NuevoAnimeForm nuevoAnime={Grabar} show={show} setShow={setShow} Agregar={Agregar}/>
 
             {props.Busqueda && AccionABMC === "L" && (
-                <div>
-                    Busqueda aqui...
-                </div>
+                <AnimesBuscar 
+                    {...{
+                        Titulo, setTitulo,
+                        Tipo, setTipo,
+                        EnEmision, setEnEmision,
+                        Estado, setEstado,
+                        Calificacion, setCalificacion,
+                        EtiquetasBusqueda, setEtiquetasBusqueda,
+                        Etiquetas,
+                        Calificaciones,
+                        Buscar
+                    }}
+                />
             )}
 
             {AccionABMC === "L" && Animes?.length > 0 && (

@@ -153,7 +153,7 @@ export default function ContenidoRegistro({
                                     className={`btn fs-5 enEspañol ${watch(`contenidos[${index}].enEspanol`) ? 'active' : 'bg-transparent'}`}
                                     style={{ borderRadius: '0.5rem', padding: '0.375rem 0.75rem' }}
                                 >
-                                    <i className="fa fa-language mx-1"></i> En Español <i className={`fa-circle fa-${watch(`contenidos[${index}].enEspanol`) ? 'solid' : 'regular'}`}></i>
+                                    <i className="fa fa-language mx-1"></i> En Español <i className={`fa fa-toggle-${watch(`contenidos[${index}].enEspanol`) ? 'on' : 'off'}`}></i>
                                     <input
                                         {...register(`contenidos[${index}].enEspanol`)}
                                         type="checkbox"
