@@ -75,7 +75,12 @@ export default function Sitios() {
 
     async function Grabar (sitio) {
         try {
-            await sitiosService.Grabar(sitio);
+            if (AccionABMC === "A")
+                await sitiosService.Grabar(sitio);
+            else if (AccionABMC === "M")
+                await sitiosService.Actualizar(sitio);
+            else
+                throw new Error("Acción no definida.");
         } catch (error) {
             modalDialogService.Alert(
                 error?.response?.data?.message ?? error.toString(), 
@@ -186,6 +191,7 @@ export default function Sitios() {
                                     className={`form-control ${errors.nombre ? "is-invalid" : ""}`}
                                     {...register("nombre", { required: true, maxLength: 50 })}
                                     aria-describedby="nombreInput"
+                                    disabled={AccionABMC === "M"}
                                 />
                                 {errors.nombre && <div className="invalid-feedback">El campo es requerido y debe tener menos de 50 caracteres.</div>}
                             </div>
