@@ -46,11 +46,11 @@ export default function AnimesBuscar({
                         <div className="form-floating">
                                 <select
                                     className="form-select"
-                                    value={EnEmision}
+                                    value={EnEmision || ""}
                                     onChange={(e) => setEnEmision(e.target.value)}
                                     id="EnEmisionSelect"
                                 >
-                                    <option value={null}></option>
+                                    <option value=""></option>
                                     <option value={false}>NO</option>
                                     <option value={true}>SÍ</option>
                                 </select>
@@ -67,7 +67,7 @@ export default function AnimesBuscar({
                             <div className="form-floating">
                                 <select
                                     className="form-select"
-                                    value={Tipo}
+                                    value={Tipo || ""}
                                     onChange={(e) => setTipo(e.target.value)}
                                     id="TipoSelect"
                                 >
@@ -85,7 +85,7 @@ export default function AnimesBuscar({
                             <div className="form-floating">
                                 <select
                                     className="form-select"
-                                    value={Estado}
+                                    value={Estado || ""}
                                     onChange={(e) => setEstado(e.target.value)}
                                     id="EstadoSelect"
                                 >
@@ -103,7 +103,7 @@ export default function AnimesBuscar({
                             <div className="form-floating">
                                 <select
                                     className="form-select"
-                                    value={Calificacion}
+                                    value={Calificacion || ""}
                                     onChange={(e) => setCalificacion(e.target.value)}
                                     id="CalificacionSelect"
                                 >
