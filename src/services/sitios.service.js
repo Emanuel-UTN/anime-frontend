@@ -3,8 +3,8 @@ const urlResource = config.urlResourceSitios;
 
 import httpService from "./http.service";
 
-async function Buscar () {
-    const resp = await httpService.get(urlResource);
+async function Buscar (nombre = "") {
+    const resp = await httpService.get(urlResource, { params: { nombre } });
     return resp.data;
 }
 

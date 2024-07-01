@@ -6,6 +6,8 @@ import { ModalDialog } from './components/ModalDialog'
 import Menu from './components/Menu'
 import Animes from './components/Animes/Animes'
 import Etiquetas from './components/Recursos/Etiquetas'
+import Calificaciones from './components/Recursos/Calificaciones'
+import Sitios from './components/Recursos/Sitios'
 
 function App() {
 
@@ -23,8 +25,8 @@ function App() {
             <Route path='/Animes' element={<Animes Busqueda={true} key={3}/>}/>
 
             <Route path='/Etiquetas' element={<Etiquetas />}/>
-            <Route path='/Calificaciones' element={""}/>
-            <Route path='/Sitios' element={""}/>
+            <Route path='/Calificaciones' element={<Calificaciones />}/>
+            <Route path='/Sitios' element={<Sitios />}/>
 
             <Route path='*' element={<Navigate to="/Inicio" replace/>}/>
           </Routes>
