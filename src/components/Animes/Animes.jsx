@@ -109,6 +109,68 @@ export default function Animes(props) {
         );
     }
 
+    async function cambiarEstado (anime)  {
+        if (anime.estado === "Por Ver" || anime.estado === "Visto") {
+            modalDialogService.Confirm(
+                `¿Está seguro que desea ${anime.estado === "Por Ver" ? "comenzar" : "volver"} a ver el anime?`, 
+                "Comenzar a ver " + anime.title, 
+                undefined,
+                undefined, 
+                () => {
+                    anime.estado = "Viendo";
+                    Grabar(anime);
+                }, 
+                undefined, 
+                "primary"
+            );
+            
+        } else if (anime.estado === "Viendo") {
+            modalDialogService.Prompt(
+                "Seleccione una calificación",
+                "Calificación",
+                "Aceptar",
+                "Cancelar",
+                (calificacion) => {
+                    if (calificacion) {
+                        anime.estado = "Visto";
+                        anime.calificacion = calificacion;
+                        Grabar(anime);
+                    }
+                },
+                null,
+                "primary",
+                Calificaciones
+            );
+        }
+    };
+
+    const obtenerClaseCalificacion = (calificacion) => {
+        const index = Calificaciones.findIndex((cal) => cal.nombre === calificacion);
+        let icono = "fa-solid fa-star"; // Icono por defecto si no se encuentra la calificación
+
+        if (index >= Calificaciones.length * 0.7) {
+            return {
+                clase: "bg-success",
+                icono: "fa-solid fa-star"
+            };
+        } else if (index >= Calificaciones.length * 0.4) {
+            return {
+                clase: "bg-warning",
+                icono: "fa-solid fa-star"
+            };
+        } else if (index > 0) {
+            return {
+                clase: "bg-danger",
+                icono: "fa-solid fa-star"
+            };
+        } else {
+            return {
+                clase: "bg-secondary",
+                icono: icono
+            }
+        }
+    };
+
     async function Grabar (anime) {
         let nuevoAnime = {}
         try {
@@ -184,12 +246,15 @@ export default function Animes(props) {
                     {...{
                         Animes,
                         Sitios,
+                        Calificaciones,
                         Paginas,
                         Pagina,
                         Buscar,
                         Consultar,
                         Modificar,
-                        Eliminar
+                        Eliminar,
+                        cambiarEstado,
+                        obtenerClaseCalificacion
                     }}
                 />
             )}
@@ -212,6 +277,7 @@ export default function Animes(props) {
                         Sitios,
                         Etiquetas,
                         Calificaciones,
+                        obtenerClaseCalificacion,
                         Grabar,
                         Volver
                     }}

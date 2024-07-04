@@ -10,6 +10,7 @@ export default function AnimeRegistro({
   Sitios,
   Etiquetas,
   Calificaciones,
+  obtenerClaseCalificacion,
   Grabar,
   Volver
 }) {
@@ -68,7 +69,7 @@ export default function AnimeRegistro({
     actualizarEnEmision();
   };
 
-  const actualizarEnEmision = (contenidos) => {
+  const actualizarEnEmision = () => {
     const enEmision = watch("contenidos").some((contenido) => contenido.enEmision);
     setValue("enEmision", enEmision);
   };
@@ -158,6 +159,64 @@ export default function AnimeRegistro({
                         />
                     </label>
                 </div>
+            </div>
+
+            {/* Estado */}
+            <div className="col-md-2 col-sm-3">
+              <div className="input-group flex-nowrap">
+                <select 
+                  {...register("estado", {
+                    required: {
+                      value: true,
+                      message: "El estado del anime es requerido"
+                    }
+                  })}
+                  className={`form-control fs-3 bg-${watch("estado") === "Por Ver" ? 'success' : watch("estado") === "Viendo" ? 'warning' : 'danger' }` + (errors.estado ? " is-invalid" : "")}
+                  placeholder="Estado"
+                  aria-label="Estado"
+                  aria-describedby="anime-estado-input"
+                >
+                  <option value="Por Ver" className="bg-success" key={1} defaultChecked>Por Ver</option>
+                  <option value="Viendo" className="bg-warning" key={2}>Viendo</option>
+                  <option value="Visto" className="bg-danger" key={3}>Visto</option>
+                </select>
+              </div>
+              {errors?.estado && (
+                  <div className="text-danger my-1">
+                      <i className="fa fa-circle-exclamation mx-2"></i>
+                      {errors.estado.message}
+                  </div>
+              )}
+            </div>
+
+            {/* Calificación */}
+            <div className="col-md-2 col-sm-3">
+              <div className="input-group flex-nowrap">
+                <select 
+                  {...register("calificacion", {
+                    required: {
+                      value: true,
+                      message: "La calificación del anime es requerida"
+                    }
+                  })}
+                  className={`form-control fs-3 ${obtenerClaseCalificacion(watch("calificacion")).clase}` + (errors.calificacion ? " is-invalid" : "")}
+                  placeholder="Calificación"
+                  aria-label="Calificación"
+                  aria-describedby="anime-calificacion-input"
+                >
+                  {Calificaciones.map((calificacion) => (
+                    <option value={calificacion.nombre} key={calificacion.id} defaultChecked={calificacion.nombre === "Sin Calificar"} className={`${obtenerClaseCalificacion(calificacion.nombre).clase}`}>
+                      {calificacion.nombre}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              {errors?.calificacion && (
+                  <div className="text-danger my-1">
+                      <i className="fa fa-circle-exclamation mx-2"></i>
+                      {errors.calificacion.message}
+                  </div>
+              )}
             </div>
           </div>
 

@@ -1,9 +1,8 @@
 import "./AnimeItem.css";
 import React, { useState, useEffect } from "react";
-
 import Url from "../extra-components/Url";
 
-export default function AnimeItem({ Anime, Sitios, Consultar, Modificar, Eliminar }) {
+export default function AnimeItem({ Anime, Sitios, Calificaciones, Consultar, Modificar, Eliminar, cambiarEstado, obtenerClaseCalificacion }) {
     const [loading, setLoading] = useState(true);
     const [urls, setUrls] = useState([]);
 
@@ -17,6 +16,44 @@ export default function AnimeItem({ Anime, Sitios, Consultar, Modificar, Elimina
 
     const handleLinkClick = (event) => {
         event.stopPropagation();
+    };
+
+    const obtenerNombreBoton = (estado) => {
+        switch (estado) {
+            case "Por Ver":
+                return (
+                    <>
+                        <i className="fa-solid fa-play-circle me-2"></i>Empezar a Ver
+                    </>
+                );
+            case "Viendo":
+                return (
+                    <>
+                        <i className="fa-solid fa-check-circle me-2"></i>Terminar de Ver
+                    </>
+                );
+            case "Visto":
+                return (
+                    <>
+                        <i className="fa-solid fa-undo me-2"></i>Volver a Ver
+                    </>
+                );
+            default:
+                return "";
+        }
+    };
+
+    const obtenerClaseEstado = (estado) => {
+        switch (estado) {
+            case "Por Ver":
+                return "bg-success";
+            case "Viendo":
+                return "bg-warning";
+            case "Visto":
+                return "bg-danger";
+            default:
+                return "bg-secondary";
+        }
     };
 
     return (
@@ -33,7 +70,7 @@ export default function AnimeItem({ Anime, Sitios, Consultar, Modificar, Elimina
                                     </div>
                                     <div className="col-md-9 col-lg-10">
                                         <div className="card-body">
-                                            <div className="row">
+                                            <div className="row align-items-center">
                                                 <div className="col-md">
                                                     <h3 className="card-title">
                                                         {/* Titulo */}
@@ -48,8 +85,43 @@ export default function AnimeItem({ Anime, Sitios, Consultar, Modificar, Elimina
                                                         )}
                                                     </h3>
                                                 </div>
-                                                {/* Acciones */}
-                                                <div className="col-md-4 content-details me-5">
+                                                <div className="col-md-4 text-end">
+                                                    {/* Calificación */}
+                                                    {Anime.calificacion !== "Sin Calificar" && (
+                                                        <span className={`badge fs-5 me-3 ${obtenerClaseCalificacion(Anime.calificacion).clase}`}>
+                                                            <i className={obtenerClaseCalificacion(Anime.calificacion).icono}></i>
+                                                            {Anime.calificacion}
+                                                        </span>
+                                                    )}
+                                                    {/* Estado */}
+                                                    <span className={`badge fs-5 ${obtenerClaseEstado(Anime.estado)}`}>
+                                                        {Anime.estado}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div className="row">
+                                                <div className="col-md">
+                                                    <p className="fs-5">{Anime.cantContenidos}</p>
+                                                    <div className="content-details mt-4">
+                                                        <div className="row">
+                                                            <h4 className="card-title">
+                                                                {contenido.title}
+                                                                <span className={`Type ${contenido.type}`}>{contenido.type}</span>
+                                                                {contenido.enEspanol && (
+                                                                    <span className="Type Español">
+                                                                        <i className="fa fa-language mx-1"></i> Español
+                                                                    </span>
+                                                                )}
+                                                            </h4>
+                                                        </div>
+                                                        <div className="row">
+                                                            <p className="card-text mt-1">{contenido.etiquetas.join(', ')}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="row mt-3">
+                                                <div className="col-md-3 col-sm-2">
                                                     <div className="btn-group">
                                                         <button className="btn btn-outline-primary" onClick={() => Consultar(Anime)} title="Consultar">
                                                             <i className="fa fa-eye"></i>
@@ -62,25 +134,18 @@ export default function AnimeItem({ Anime, Sitios, Consultar, Modificar, Elimina
                                                         </button>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            {/* Contenidos */}
-                                            <p className="card-text fs-5">{Anime.cantContenidos}</p>
-                                            <div className="content-details mt-4">
-                                                <div className="row">
-                                                    <h4 className="card-title">
-                                                        {contenido.title}
-                                                        <span className={`Type ${contenido.type}`}>{contenido.type}</span>
-                                                        {contenido.enEspanol && (
-                                                            <span className="Type Español">
-                                                                <i className="fa fa-language mx-1"></i> Español
-                                                            </span>
-                                                        )}
-                                                    </h4>
+
+                                                <div className="col-md-5 col-sm-6 text-center estado-container">
+                                                    <button
+                                                        className="btn btn-lg btn-outline-success"
+                                                        onClick={() => cambiarEstado(Anime)}
+                                                        title={obtenerNombreBoton(Anime.estado)}
+                                                    >
+                                                        {obtenerNombreBoton(Anime.estado)}
+                                                    </button>
                                                 </div>
-                                                <div className="row">
-                                                    <p className="card-text mt-1">{contenido.etiquetas.join(', ')}</p>
-                                                </div>
-                                                <div className="links my-1">
+
+                                                <div className="col-4 d-flex my-1">
                                                     {contenido.urls?.map((url, index) => (
                                                         <Url
                                                             key={index}

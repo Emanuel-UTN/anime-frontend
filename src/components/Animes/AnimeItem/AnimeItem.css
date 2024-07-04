@@ -1,16 +1,16 @@
 .carousel-item img {
-    object-fit: cover; /* Maintain aspect ratio and fill the box */
+    object-fit: cover; /* Mantiene la relación de aspecto y llena la caja */
 }
 
 .card {
     transition: transform 0.5s ease-in-out; /* Ralentiza la transformación */
-    transform: scale(0.9); /* Smaller size */
-    border-radius: 15px; /* Rounded corners */
+    transform: scale(0.9); /* Tamaño más pequeño */
+    border-radius: 15px; /* Bordes redondeados */
 }
 
 .card:hover {
-    transform: scale(1); /* Original size on hover */
-    border-radius: 15px; /* Rounded corners */
+    transform: scale(1); /* Tamaño original al pasar el cursor */
+    border-radius: 15px; /* Bordes redondeados */
 }
 
 .carousel-item {
@@ -19,23 +19,23 @@
 
 .icon-link {
     position: relative;
-    width: 32px; /* Set a uniform width */
-    height: 32px; /* Set a uniform height */
+    width: 32px; /* Establece un ancho uniforme */
+    height: 32px; /* Establece una altura uniforme */
     transition: transform 0.3s ease-in-out;
 }
 
 .icon-link img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Ensure the image covers the entire area */
+    object-fit: cover; /* Asegura que la imagen cubra toda el área */
 }
 
 .icon-link:hover {
-    transform: scale(1.2); /* Increase size on hover */
+    transform: scale(1.2); /* Aumenta el tamaño al pasar el cursor */
 }
 
 .icon-link::after {
-    content: attr(data-text); /* Use the data-text attribute for the tooltip */
+    content: attr(data-text); /* Usa el atributo data-text para la información emergente */
     position: absolute;
     bottom: -20px;
     left: 50%;
@@ -52,93 +52,93 @@
 }
 
 .icon-link:hover::after {
-    opacity: 1; /* Show tooltip on hover */
+    opacity: 1; /* Muestra la información emergente al pasar el cursor */
 }
 
 span.EnEmision {
     background-color: coral; /* Coral */
-    color: wheat; /* Wheat text */
+    color: wheat; /* Texto en color trigo */
     margin-left: 15px;
-    padding: 5px; /* Padding */
-    border-radius: 5px; /* Rounded corners */
-    font-size: 15px; /* Small font size */
-    width: 175px; /* Small width */
-    height: 175px; /* Small height */
+    padding: 5px; /* Espaciado interno */
+    border-radius: 5px; /* Bordes redondeados */
+    font-size: 15px; /* Tamaño de fuente pequeño */
+    width: 175px; /* Ancho pequeño */
+    height: 175px; /* Altura pequeña */
 }
 
 span.Type {
-    color: white; /* White text */
-    margin-left: 15px; /* Margin */
-    padding: 2.5px 15px 2.5px 15px; /* Padding */
-    border-radius: 500px; /* Rounded corners */
-    font-size: 13px; /* Small font size */
-    width: 150px; /* Small width */
-    height: 150px; /* Small height */
+    color: white; /* Texto en color blanco */
+    margin-left: 15px; /* Margen */
+    padding: 2.5px 15px 2.5px 15px; /* Espaciado interno */
+    border-radius: 500px; /* Bordes redondeados */
+    font-size: 13px; /* Tamaño de fuente pequeño */
+    width: 150px; /* Ancho pequeño */
+    height: 150px; /* Altura pequeña */
 }
 
 span.AnimeType {
-    color: whitesmoke; /* White text */
-    margin-left: 15px; /* Margin */
-    padding: 2.5px 12px 2.5px 12px; /* Padding */
-    border-radius: 350px; /* Rounded corners */
-    font-size: 15px; /* Small font size */
-    width: 175px; /* Small width */
-    height: 175px; /* Small height */
+    color: whitesmoke; /* Texto en color blanco humo */
+    margin-left: 15px; /* Margen */
+    padding: 2.5px 12px 2.5px 12px; /* Espaciado interno */
+    border-radius: 350px; /* Bordes redondeados */
+    font-size: 15px; /* Tamaño de fuente pequeño */
+    width: 175px; /* Ancho pequeño */
+    height: 175px; /* Altura pequeña */
 }
 
 span.Anime, span.Serie {
-    background-color: #44c0f1; /* Light Blue */
+    background-color: #44c0f1; /* Azul claro */
 }
 
 span.Película {
-    background-color: #f14444; /* Light Red */
+    background-color: #f14444; /* Rojo claro */
 }
 
 span.OVA {
-    background-color: #f1a644; /* Light Orange */
+    background-color: #f1a644; /* Naranja claro */
 }
 
 span.Español {
-    background-color: purple; /* Purple */
+    background-color: purple; /* Púrpura */
 }
 
 .content-container {
-    height: 100px; /* Smaller height */
-    overflow: hidden; /* Hide overflowing content */
-    transition: height 0.6s ease-in-out; /* Smooth and slower transition */
+    height: 100px; /* Altura más pequeña */
+    overflow: hidden; /* Oculta el contenido desbordado */
+    transition: height 0.6s ease-in-out; /* Transición suave y más lenta */
 }
 
 .card:hover .content-container {
-    height: auto; /* Expand to show full content on hover */
+    height: auto; /* Expande para mostrar el contenido completo al pasar el cursor */
 }
 
 .content-details {
-    display: none; /* Hide details by default */
+    display: none; /* Oculta los detalles por defecto */
 }
 
 .card:hover .content-details {
-    display: block; /* Show details on hover */
+    display: block; /* Muestra los detalles al pasar el cursor */
 }
 
 .anime-image {
-    width: 100%; /* Ensure the image covers the entire area */
-    height: 100px; /* Set a uniform height */
+    width: 100%; /* Asegura que la imagen cubra toda el área */
+    height: 100px; /* Establece una altura uniforme */
 }
 
 .card:hover .anime-image {
-    height: auto; /* Adjust height to fit content when expanded */
+    height: auto; /* Ajusta la altura para que se ajuste al contenido cuando se expande */
 }
 
 .links {
     position: absolute;
     bottom: 10px;
     right: 15rem;
-    display: flex; /* Display the links in a row */
-    gap: 1rem; /* Add gap between the links */
-    transition: right 0.3s ease-in-out; /* Smooth transition for right position */
+    display: flex; /* Muestra los enlaces en una fila */
+    gap: 1rem; /* Añade un espacio entre los enlaces */
+    transition: right 0.3s ease-in-out; /* Transición suave para la posición a la derecha */
 }
 
-/* Media Queries for responsiveness */
+/* Consultas de medios para la capacidad de respuesta */
 @media (max-width: 1200px) {
     .links {
         right: 10rem;
@@ -155,4 +155,17 @@ span.Español {
     .links {
         right: 4rem;
     }
+}
+
+.card-body {
+    position: relative;
+}
+
+.btn-group, .estado-container {
+    transition: opacity 0.3s;
+    opacity: 0;
+}
+
+.card:hover .btn-group, .card:hover .estado-container {
+    opacity: 1;
 }

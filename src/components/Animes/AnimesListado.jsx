@@ -5,12 +5,15 @@ import AnimeItem from "./AnimeItem/AnimeItem";
 export default function AnimesListado({
     Animes,
     Sitios,
+    Calificaciones,
     Paginas,
     Pagina,
     Buscar,
     Consultar,
     Modificar,
     Eliminar,
+    cambiarEstado,
+    obtenerClaseCalificacion
 }) {
     return (
         <div className="container px-4 py-5">
@@ -21,9 +24,12 @@ export default function AnimesListado({
                             Anime={anime}
                             {...{
                                 Sitios,
+                                Calificaciones,
                                 Consultar,
                                 Modificar,
-                                Eliminar
+                                Eliminar,
+                                cambiarEstado,
+                                obtenerClaseCalificacion
                             }}
                         />
                     </div>

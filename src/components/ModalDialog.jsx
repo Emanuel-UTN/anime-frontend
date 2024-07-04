@@ -4,19 +4,18 @@ import Modal from 'react-bootstrap/Modal';
 import modalDialogService from '../services/modalDialog.service';
 
 export function ModalDialog() {
-    const [ mensaje, setMensaje ] = useState("");
-    const [ titulo, setTitulo ] = useState("");
-
-    const [ boton1, setBoton1 ] = useState("");
-    const [ boton2, setBoton2 ] = useState("");
-    const [ accionBoton1, setAccionBoton1 ] = useState(null);
-    const [ accionBoton2, setAccionBoton2 ] = useState(null);
-
-    const [ tipo, setTipo ] = useState("");
-
+    const [mensaje, setMensaje] = useState("");
+    const [titulo, setTitulo] = useState("");
+    const [boton1, setBoton1] = useState("");
+    const [boton2, setBoton2] = useState("");
+    const [accionBoton1, setAccionBoton1] = useState(null);
+    const [accionBoton2, setAccionBoton2] = useState(null);
+    const [tipo, setTipo] = useState("");
+    const [calificaciones, setCalificaciones] = useState([]);
+    const [calificacionSeleccionada, setCalificacionSeleccionada] = useState("");
 
     const handleAccionBoton1 = () => {
-        if (accionBoton1) accionBoton1();
+        if (accionBoton1) accionBoton1(calificacionSeleccionada);
         setMensaje((x) => (x = ""));
     }
 
@@ -25,11 +24,9 @@ export function ModalDialog() {
         setMensaje((x) => (x = ""));
     }
 
-
     const handleClose = () => {
         setMensaje((x) => (x = ""));
     }
-
 
     function Show(
         _mensaje,
@@ -38,8 +35,9 @@ export function ModalDialog() {
         _boton2,
         _accionBoton1,
         _accionBoton2,
-        _tipo
-    ){
+        _tipo,
+        _calificaciones = []
+    ) {
         setMensaje((x) => (x = _mensaje));
         setTitulo((x) => (x = _titulo));
         setBoton1((x) => (x = _boton1));
@@ -47,6 +45,7 @@ export function ModalDialog() {
         setAccionBoton1((x) => (x = _accionBoton1));
         setAccionBoton2((x) => (x = _accionBoton2));
         setTipo((x) => (x = _tipo));
+        setCalificaciones((x) => (x = _calificaciones));
     }
 
     useEffect(() => {
@@ -75,9 +74,17 @@ export function ModalDialog() {
             classHeader = "bg-info";
             faIcon = "fa-solid fa-circle-info";
             break;
+        case "primary":
+            classHeader = "bg-primary";
+            faIcon = "fa-solid fa-circle-info";
+            break;
+        case "secondary":
+            classHeader = "bg-secondary";
+            faIcon = "fa-solid fa-circle-info";
+            break;
         default:
             classHeader = "bg-success";
-            faIcon = "fa-solid fa-circle-check"
+            faIcon = "fa-solid fa-circle-check";
             break;
     }
 
@@ -85,7 +92,6 @@ export function ModalDialog() {
 
     return (
         <Modal show onHide={handleClose} backdrop="static" keyboard={mensaje !== "BloquearPantalla"}>
-            
             <Modal.Header className={classHeader} closeButton={mensaje !== "BloquearPantalla"}>
                 <Modal.Title> {titulo} </Modal.Title>
             </Modal.Header>
@@ -103,10 +109,28 @@ export function ModalDialog() {
                         ></div>
                     </div>
                 ) : (
-                    <p>
-                        <i className={faIcon} style={{ fontSize: "1.6em", margin: "0.5em"}}></i>
-                        {mensaje}
-                    </p>
+                    <>
+                        <p>
+                            <i className={faIcon} style={{ fontSize: "1.6em", margin: "0.5em" }}></i>
+                            {mensaje}
+                        </p>
+                        {calificaciones.length > 0 && (
+                            <div className="mt-3">
+                                <select
+                                    className="form-select"
+                                    value={calificacionSeleccionada}
+                                    onChange={(e) => setCalificacionSeleccionada(e.target.value)}
+                                >
+                                    <option value="">Seleccione una calificación</option>
+                                    {calificaciones.map((calificacion) => (
+                                        <option key={calificacion.id} value={calificacion.nombre}>
+                                            {calificacion.nombre}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                        )}
+                    </>
                 )}
             </Modal.Body>
 

@@ -171,7 +171,7 @@ export default function ContenidoRegistro({
                         
                         {/* En Emisión */}
                         <div className="col-md-3 col-sm-6">
-                            <div className="btn-group flex-nowrap" aria-label="radio toggle button">
+                            <div className="input-group flex-nowrap" aria-label="radio toggle button">
                                 <label
                                     className={`btn fs-5 enEmision ${watch(`contenidos[${index}].enEmision`) ? 'active' : 'bg-transparent'}`}
                                     onClick={() => {
