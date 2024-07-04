@@ -1,0 +1,20 @@
+.table-rounded {
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.table-rounded thead th.rounded-top-start {
+    border-top-left-radius: 10px;
+}
+
+.table-rounded thead th.rounded-top-end {
+    border-top-right-radius: 10px;
+}
+
+.table-rounded-bottom td.rounded-bottom-start {
+    border-bottom-left-radius: 10px;
+}
+
+.table-rounded-bottom td.rounded-bottom-end {
+    border-bottom-right-radius: 10px;
+}

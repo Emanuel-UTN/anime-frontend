@@ -10,6 +10,7 @@ const urlResourceEtiquetas = `${API_URL}/etiquetas`;  // ETIQUETAS
 const urlResourceCalificaciones = `${API_URL}/calificaciones`;  // CALIFICACIONES
 const urlResourceSitios = `${API_URL}/sitios`;  // SITIOS WEB
 
+const urlResourceStats = `${API_URL}/stats`;  // STATS
 
 
 
@@ -21,5 +22,6 @@ export const config = {
     urlResourceContenidos,
     urlResourceEtiquetas,
     urlResourceCalificaciones,
-    urlResourceSitios
+    urlResourceSitios,
+    urlResourceStats
 }

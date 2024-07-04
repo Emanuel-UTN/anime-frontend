@@ -214,18 +214,20 @@ export default function Animes(props) {
 
     return (
         <div>
-            <div className="tituloPagina mx-5">
-                Animes {props.Estado ? ` - ${props.Estado}` : ""}
-                {AccionABMC === "L" && (
-                    <button className="btn btn-outline-success float-end" onClick={() => setShow(true)}>
-                        <i className="fa fa-plus"></i> Nuevo Anime
-                    </button>
-                )}
-            </div>
+            {props.Titulo !== false && (
+                <div className="tituloPagina mx-5">
+                    Animes {props.Estado ? ` - ${props.Estado}` : ""}
+                    {AccionABMC === "L" && (
+                        <button className="btn btn-outline-success float-end" onClick={() => setShow(true)}>
+                            <i className="fa fa-plus"></i> Nuevo Anime
+                        </button>
+                    )}
+                </div>
+            )}
 
             <NuevoAnimeForm nuevoAnime={Grabar} show={show} setShow={setShow} Agregar={Agregar}/>
 
-            {props.Busqueda && AccionABMC === "L" && (
+            {props.Busqueda !== false && AccionABMC === "L" && (
                 <AnimesBuscar 
                     {...{
                         Titulo, setTitulo,

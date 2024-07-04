@@ -139,7 +139,6 @@ export default function AnimeItem({ Anime, Sitios, Calificaciones, Consultar, Mo
                                                     <button
                                                         className="btn btn-lg btn-outline-success"
                                                         onClick={() => cambiarEstado(Anime)}
-                                                        title={obtenerNombreBoton(Anime.estado)}
                                                     >
                                                         {obtenerNombreBoton(Anime.estado)}
                                                     </button>
