@@ -35,7 +35,7 @@ export default function Inicio() {
                         <div className="row my-2">
                             <div className="col-md-5 col-6 mx-auto">
                                 <table className="table table-sm table-bordered border-danger-subtle table-rounded">
-                                    <thead className="table-dark">
+                                    <thead className="table">
                                         <tr>
                                             <th className="rounded-top-start">Animes Registrados</th>
                                             <th className="text-center">Por Ver</th>
@@ -55,7 +55,7 @@ export default function Inicio() {
 
                             <div className="col-md-7 col-6 mx-auto">
                                 <table className="table table-sm table-bordered border-danger-subtle table-rounded">
-                                    <thead className="table-dark">
+                                    <thead className="table">
                                         <tr>
                                             {stats.animes_calificados?.map((animes, index) => index !== 0 && (
                                                 <th className={`text-center ${index === 1 ? "rounded-top-start" : ""} ${index === stats.animes_calificados.length - 1 ? "rounded-top-end" : ""}`} key={index}>{animes.calificacion}</th>

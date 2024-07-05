@@ -1,6 +1,7 @@
 import './App.css'
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom'
 
+import { ThemeProvider } from './context/ThemeContext'
 import { ModalDialog } from './components/ModalDialog'
 
 import Menu from './components/Menu'
@@ -14,25 +15,27 @@ function App() {
 
   return (
     <>
-      <BrowserRouter>
-        <ModalDialog />
+      <ThemeProvider>
+        <BrowserRouter>
+          <ModalDialog />
 
-        <Menu />
-        <div className="divBody">
-          <Routes>
-            <Route path='/Inicio' element={<Inicio />}/>
-            <Route path='/Por-Ver' element={<Animes Busqueda={false} Estado='Por Ver' key={1}/>}/>
-            <Route path='/Vistos' element={<Animes Busqueda={false} Estado='Visto' key={2}/>}/>
-            <Route path='/Animes' element={<Animes key={3}/>}/>
+          <Menu />
+          <div className="divBody">
+            <Routes>
+              <Route path='/Inicio' element={<Inicio />}/>
+              <Route path='/Por-Ver' element={<Animes Busqueda={false} Estado='Por Ver' key={1}/>}/>
+              <Route path='/Vistos' element={<Animes Busqueda={false} Estado='Visto' key={2}/>}/>
+              <Route path='/Animes' element={<Animes key={3}/>}/>
 
-            <Route path='/Etiquetas' element={<Etiquetas />}/>
-            <Route path='/Calificaciones' element={<Calificaciones />}/>
-            <Route path='/Sitios' element={<Sitios />}/>
+              <Route path='/Etiquetas' element={<Etiquetas />}/>
+              <Route path='/Calificaciones' element={<Calificaciones />}/>
+              <Route path='/Sitios' element={<Sitios />}/>
 
-            <Route path='*' element={<Navigate to="/Inicio" replace/>}/>
-          </Routes>
-        </div>
-      </BrowserRouter>
+              <Route path='*' element={<Navigate to="/Inicio" replace/>}/>
+            </Routes>
+          </div>
+        </BrowserRouter>
+      </ThemeProvider>
     </>
   )
 }

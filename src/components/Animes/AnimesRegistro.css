@@ -70,10 +70,24 @@ label.enEspañol {
 
 label.enEspañol:hover {
   background-color: purple;
+}
+
+[data-bs-theme="dark"] label.enEspañol:hover {
   color: white;
   border-color: white;
 }
 
+[data-bs-theme="light"] {
+  label.enEspañol:hover {
+    color: #212529;
+    border-color: #212529;
+  }
+
+  label.enEspañol.active:hover {
+    color: white;
+    border-color: white;
+  }
+}
 label.enEspañol.active {
   background-color: purple;
   color: white;

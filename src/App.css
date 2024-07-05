@@ -1,3 +1,4 @@
+/* Tema por defecto */
 body {
   background-color: rgb(241, 243, 247);
 }
@@ -12,24 +13,20 @@ body {
 footer {
   padding: 1rem;
 }
+
 .navbar-brand {
-  color: aquamarine;
   font-size: 1.5rem;
 }
 
 .tituloPagina {
   font-size: 2rem;
   font-weight: 550;
-  color: crimson;
   text-shadow: 1px 1px 2px black;
   border-bottom-style: solid;
-  border-color: #3b3f42;
   border-bottom-width: thin;
   padding-bottom: 0.1em;
   margin-bottom: 0.5em;
 }
-
-
 
 /* todos los formularios */
 form {
@@ -93,12 +90,13 @@ form {
   margin-top: -1rem; /* para pegarlo a la tabla */
 }
 
-/* todos los input a mayusculas, y no sus placeholders*/
+/* todos los input a mayusculas, y no sus placeholders */
 input {
   text-transform: none;
   /* margin-bottom: 0.2em;  */
   /*separa renglones*/
 }
+
 ::placeholder {
   text-transform: none;
 }
@@ -118,4 +116,51 @@ thead {
   padding: 0.4em;
   margin: 0.3em;
   border-radius: 1em;
+}
+
+/* Estilos para el tema oscuro */
+[data-bs-theme="dark"] {
+  
+  .dropdown-menu {
+    background-color: #343a40;
+    color: #ffffff;
+  }
+
+  .navbar-brand {
+    color: crimson;
+  }
+
+  .tituloPagina {
+    color: crimson;
+    border-color: #3b3f42;
+  }
+}
+
+/* Estilos para el tema claro */
+[data-bs-theme="light"] {
+  
+  .dropdown-menu {
+    background-color: #f8f9fa;
+    color: #212529;
+  }
+
+  .navbar-brand {
+    color: red;
+  }
+
+  .tituloPagina {
+    color: red;
+    border-color: #a6aeb4;
+  }
+}
+
+/* Estilos para el tema auto (opcional) */
+
+[data-bs-theme="auto"] .dropdown-menu {
+  background-color: #6c757d;
+  color: #ffffff;
+}
+
+[data-bs-theme="auto"] .navbar-brand {
+  color: red;
 }
