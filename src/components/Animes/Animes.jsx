@@ -116,9 +116,9 @@ export default function Animes(props) {
                 "Comenzar a ver " + anime.title, 
                 undefined,
                 undefined, 
-                () => {
+                async () => {
                     anime.estado = "Viendo";
-                    Grabar(anime);
+                    await Guardar(anime);
                 }, 
                 undefined, 
                 "primary"
@@ -130,16 +130,35 @@ export default function Animes(props) {
                 "Calificación",
                 "Aceptar",
                 "Cancelar",
-                (calificacion) => {
+                async (calificacion) => {
                     if (calificacion) {
                         anime.estado = "Visto";
                         anime.calificacion = calificacion;
-                        Grabar(anime);
+                        await Guardar(anime);
                     }
                 },
                 null,
                 "primary",
                 Calificaciones
+            );
+        }
+
+        async function Guardar(anime) {
+            await animesService.Grabar(anime);
+
+            if (Animes.length === 1)
+                setAnimes([]);
+            else
+                await Buscar();
+
+            modalDialogService.Alert(
+                `El anime fue ${anime.estado === "Viendo" ? "comenzado" : "visto"} correctamente.`, 
+                "Comenzar a ver " + anime.title, 
+                undefined, 
+                undefined, 
+                undefined, 
+                undefined, 
+                "success"
             );
         }
     };
