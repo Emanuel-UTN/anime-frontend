@@ -66,7 +66,10 @@ export default function Calificaciones() {
             undefined,
             async () => {
                 await calificacionesService.Eliminar(calificacion.id);
-                await Buscar();
+                if (Calificaciones.length === 1)
+                    setCalificaciones([]);
+                else
+                    await Buscar();
                 modalDialogService.Alert("La Calificación fue eliminada correctamente.", "Eliminar Calificación", undefined, undefined, undefined, undefined, "success");
             }
         );

@@ -67,7 +67,10 @@ export default function Sitios() {
             undefined,
             async () => {
                 await sitiosService.Eliminar(sitio.nombre);
-                await Buscar();
+                if(Sitios.length === 1)
+                    setSitios([]);
+                else
+                    await Buscar();
                 modalDialogService.Alert("La Sitio fue eliminada correctamente.", "Eliminar Sitio", undefined, undefined, undefined, undefined, "success");
             }
         );

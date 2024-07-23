@@ -66,7 +66,10 @@ export default function Etiquetas() {
             undefined,
             async () => {
                 await etiquetasService.Eliminar(etiqueta.id);
-                await Buscar();
+                if(Etiquetas.length === 1)
+                    setEtiquetas([]);
+                else
+                    await Buscar();
                 modalDialogService.Alert("La Etiqueta fue eliminada correctamente.", "Eliminar Etiqueta", undefined, undefined, undefined, undefined, "success");
             }
         );

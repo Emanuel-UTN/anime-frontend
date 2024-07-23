@@ -35,7 +35,7 @@ const BloquearPantalla = (blnBloquear) => {
 
     if (ModalDialog_Show) {
         if (ctnBloquearPantalla === 1) {
-            ModalDialog_Show("BloquearPantalla", "Espero por favor...", "", "", null, null, "info")
+            ModalDialog_Show("BloquearPantalla", "Espere por favor...", "", "", null, null, "info")
         } else if (ctnBloquearPantalla === 0) {
             ModalDialog_Show("", "", "", "", null, null)
         }

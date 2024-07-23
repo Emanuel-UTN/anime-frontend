@@ -1,8 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import "./AnimesRegistro.css"; // Asegúrate de importar tu archivo CSS
 
 import ContenidoRegistro from "./extra-components/ContenidoRegistro";
+import modalDialogService from "../../services/modalDialog.service";
 
 export default function AnimeRegistro({
   AccionABMC,
@@ -79,6 +80,46 @@ export default function AnimeRegistro({
   }, [Anime.contenidos, setValue]);
 
   const contenidos = watch("contenidos");
+
+  function fusionarContenidos(index1, index2) {
+    const nuevosContenidos = [...contenidos];
+  
+    const cont1 = nuevosContenidos[index1];
+    const cont2 = nuevosContenidos[index2];
+  
+    if (!cont1 || !cont2) {
+      return;
+    }
+  
+    if (cont1.type !== cont2.type) {
+      return modalDialogService.Alert(
+        'Los contenidos deben ser del mismo tipo para poder fusionarlos',
+        'Los contenidos son distintos',
+        undefined,
+        undefined,
+        undefined,
+        undefined,
+        'warning'
+      );
+    }
+  
+    // Fusionar contenidos
+    cont1.enEspanol = cont1.enEspanol || cont2.enEspanol;
+    cont1.enEmision = cont1.enEmision || cont2.enEmision;
+  
+    cont1.etiquetas = Array.from(new Set([...cont1.etiquetas, ...cont2.etiquetas]));
+    cont1.urls = Array.from(new Set([...cont1.urls, ...cont2.urls]));
+  
+    if (cont2.imagenUrl.includes('animeflv')) {
+      cont1.imagenUrl = cont2.imagenUrl;
+    }
+  
+    nuevosContenidos[index1] = cont1;
+    nuevosContenidos.splice(index2, 1);
+  
+    setValue('contenidos', nuevosContenidos);
+    setValue('contenidosActualizados', true);
+  } 
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="anime-registro-form">
@@ -275,11 +316,12 @@ export default function AnimeRegistro({
             <div className="row my-3">
               <button
                 type="button"
-                className="btn btn-outline-primary"
+                className="btn btn-outline-primary mb-3"
                 onClick={agregarContenido}
               >
                 <i className="fa fa-plus"></i> Añadir Contenido
               </button>
+              <FusionarContenidos {...{ contenidos, fusionarContenidos}} />
             </div>
           )}
         </fieldset>
@@ -301,5 +343,105 @@ export default function AnimeRegistro({
         </div>
       </div>
     </form>
+  );
+}
+
+import { Modal, Form, Button, Row, Col, Image } from "react-bootstrap";
+
+function FusionarContenidos({ contenidos, fusionarContenidos }) {
+  const [show, setShow] = useState(false);
+  const [index1, setIndex1] = useState(-1);
+  const [index2, setIndex2] = useState(-1);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => {
+    setIndex1(-1);
+    setIndex2(-1);
+    setShow(true);
+  };
+
+  const fusionar = () => {
+    if (index1 !== -1 && index2 !== -1) {
+      fusionarContenidos(index1, index2);
+      handleClose();
+    }
+  };
+
+  return (
+    <>
+      <Button variant="outline-warning" onClick={handleShow}>
+        <i className="fa fa-repeat"></i> Fusionar Contenidos
+      </Button>
+
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Fusionar Contenidos</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <p>
+              Debes seleccionar dos contenidos para fusionar. Ten en cuenta que
+              el primer contenido se mantendrá la mayor parte de las cosas.
+            </p>
+            <Row>
+              <Col>
+                <Form.Group className="mb-3">
+                  <Form.Label>Contenido 1</Form.Label>
+                  <Form.Control as="select" onChange={(e) => setIndex1(parseInt(e.target.value))}>
+                    <option value={-1}></option>
+                    {contenidos.map((contenido, index) => (
+                      index !== index2 && (
+                        <option value={index} key={index}>
+                          {`${index + 1} ${contenido.title}`}
+                        </option>
+                      )
+                    ))}
+                  </Form.Control>
+                  {index1 !== -1 && (
+                    <Image
+                      src={contenidos[index1]?.imagenUrl}
+                      alt={contenidos[index1]?.title}
+                      className="img-fluid rounded-start anime-image"
+                      thumbnail
+                    />
+                  )}
+                </Form.Group>
+              </Col>
+              <Col>
+                <Form.Group className="mb-3">
+                  <Form.Label>Contenido 2</Form.Label>
+                  <Form.Control as="select" onChange={(e) => setIndex2(parseInt(e.target.value))}>
+                    <option value={-1}></option>
+                    {contenidos.map((contenido, index) => (
+                      index !== index1 && (
+                        <option value={index} key={index}>
+                          {`${index + 1} ${contenido.title}`}
+                        </option>
+                      )
+                    ))}
+                  </Form.Control>
+                  {index2 !== -1 && (
+                    <Image
+                      src={contenidos[index2]?.imagenUrl}
+                      alt={contenidos[index2]?.title}
+                      className="img-fluid rounded-start anime-image"
+                      thumbnail
+                    />
+                  )}
+                </Form.Group>
+              </Col>
+            </Row>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Cancelar
+          </Button>
+          <Button variant="primary" onClick={fusionar} disabled={index1 === -1 || index2 === -1}>
+            Fusionar
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </>
   );
 }

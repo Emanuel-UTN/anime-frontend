@@ -33,13 +33,13 @@ export default function Animes(props) {
 
     const [ show, setShow ] = useState(false);
 
+    async function BuscarListas (servicio, setDatos) {
+        const resp = await servicio.Buscar();
+        setDatos(resp);
+    }
+
     // Cargar listas necesarias
     useEffect(() => {
-        async function BuscarListas (servicio, setDatos) {
-            const resp = await servicio.Buscar();
-            setDatos(resp);
-        }
-
         BuscarListas(sitiosService, setSitios);
         BuscarListas(etiquetasService, setEtiquetas);
         BuscarListas(calificacionesService, setCalificaciones);
@@ -103,7 +103,10 @@ export default function Animes(props) {
             undefined,
             async () => {
                 await animesService.Eliminar(anime.id);
-                await Buscar();
+                if (Animes.length === 1)
+                    setAnimes([]);
+                else
+                    await Buscar();
                 modalDialogService.Alert("El anime fue eliminado correctamente.", "Eliminar Anime", undefined, undefined, undefined, undefined, "success");
             }
         );
@@ -208,6 +211,9 @@ export default function Animes(props) {
         }
 
         if (typeof anime !== "string") {
+            // Actualizar nuevas etiquetas
+            BuscarListas(etiquetasService, setEtiquetas);
+
             await Buscar();
             Volver();
 
